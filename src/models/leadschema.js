@@ -26,6 +26,11 @@ const LeadSchema = new mongoose.Schema(
       enum: ["New", "Contacted", "Qualified", "Converted", "Lost"],
       default: "New",
     },
+    source:{
+      type:String,
+      enum:['Website','Referral','LinkedIn','Event','Cold Outreach','other'],
+      default:"other",
+    },
     notes: {
       type: String,
       default: "",

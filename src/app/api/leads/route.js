@@ -6,7 +6,7 @@ export async function POST(request) {
   try {
     await ConnectionDb();
     const body = await request.json();
-    const { name, email, PhoneNumber, company ,notes} = body;
+    const { name, email, PhoneNumber, company ,notes,source} = body;
     if (!name || !email || !PhoneNumber || !company) {
       return NextResponse.json(
         { success: false, error: "All fields are required" },
@@ -22,7 +22,7 @@ export async function POST(request) {
       );
     }
 
-    const lead = await Leads.create({ name, email, PhoneNumber, company ,notes:notes||""});
+    const lead = await Leads.create({ name, email, PhoneNumber, company ,notes:notes||"",source:source||""});
 
     return NextResponse.json(
       {

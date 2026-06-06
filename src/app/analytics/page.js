@@ -97,7 +97,7 @@ export default function AnalyticsPage() {
       </div>
 
      
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
           <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">
             Total Leads
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
       </div>
 
     
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
         
         <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
@@ -195,7 +195,7 @@ export default function AnalyticsPage() {
         </div>
 
        
-        <div className="bg-card border border-border rounded-lg p-5 shadow-sm col-span-2">
+        <div className="bg-card border border-border rounded-lg p-5 shadow-sm col-span-full">
           <h2 className="text-sm font-semibold mb-1">Conversion Funnel</h2>
           <p className="text-xs text-muted-foreground mb-4">
             How leads move through each stage

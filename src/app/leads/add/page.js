@@ -81,7 +81,7 @@ export default function AddLeadPage() {
         </p>
       </div>
 
-      <div className="bg-card bborder-2 border-border/60 dark:border-border rounded-lg p-4 sm:p-6 w-full">
+      <div className="bg-card border border-border/60 dark:border-border rounded-lg p-4 sm:p-6 w-full">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">

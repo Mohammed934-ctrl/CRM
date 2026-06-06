@@ -21,6 +21,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 
 const nav = [
@@ -41,15 +42,16 @@ export default function Appsidebar() {
 
   return (
     <Sidebar>
-      <SidebarHeader className="border-b border-border px-4 py-3.5">
+      <SidebarHeader className="border-b border-border px-3 py-3 flex flex-row items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="size-8 rounded-md bg-primary flex items-center justify-center">
+          <div className="size-8 rounded-md bg-primary flex items-center justify-center shrink-0">
             <Users className="size-4 text-primary-foreground" />
           </div>
           <span className="text-lg font-semibold tracking-tight">
             <span className="text-primary">Lead</span>CRM
           </span>
         </div>
+        <SidebarTrigger className="size-8 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors" />
       </SidebarHeader>
 
       <SidebarContent>
@@ -60,7 +62,7 @@ export default function Appsidebar() {
               const active = exact
                 ? pathname === href
                 : pathname === href ||
-                  (pathname.startsWith(href) && pathname !== "/leads/add");
+                (pathname.startsWith(href) && pathname !== "/leads/add");
 
               return (
                 <SidebarMenuItem key={href}>
@@ -68,8 +70,8 @@ export default function Appsidebar() {
                     isActive={active}
                     className={
                       active
-                        ? "bg-accent text-sidebar-foreground font-medium border-l-2 border-primary"
-                        : "text-muted-foreground hover:bg-accent hover:text-sidebar-foreground"
+                        ? "bg-primary/15 text-foreground font-semibold border-l-2 border-primary"
+                        : "text-muted-foreground hover:bg-accent/60 hover:text-sidebar-foreground"
                     }
                   >
                     <Link href={href} className="flex items-center gap-2 w-full">

@@ -25,8 +25,8 @@ export default function RecentLeads({ leads }) {
 
   return (
     <div className="bg-card border border-border shadow-sm  rounded-lg overflow-hidden">
-      <div className="flex items-center gap-3 px-5 py-3.5 border-b border-border">
-        <h2 className="text-sm font-semibold flex-1"> Recent Leads</h2>
+      <div className="flex flex-wrap items-center gap-2 px-5 py-3.5 border-b border-border">
+        <h2 className="text-sm font-semibold flex-1 min-w-max"> Recent Leads</h2>
         <div className="flex items-center gap-2 ">
           {FILTERS.map((fl) => (
             <button
@@ -50,7 +50,42 @@ export default function RecentLeads({ leads }) {
           View all <ArrowRight className="size-4" />
         </Link>
       </div>
-      <div className="overflow-x-auto">
+
+      {/* Mobile card list */}
+      <div className="sm:hidden divide-y divide-border">
+        {filtered.length === 0 ? (
+          <div className="px-4 py-10 text-center text-sm text-muted-foreground">
+            No leads found
+          </div>
+        ) : (
+          filtered.map((data) => (
+            <div
+              key={data._id}
+              onClick={() => router.push(`/leads/${data._id}`)}
+              className="px-4 py-3.5 hover:bg-muted/20 transition-colors cursor-pointer"
+            >
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-7 h-7 rounded-full bg-primary/10 text-primary text-xs font-semibold flex items-center justify-center shrink-0">
+                    {initials(data.name)}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-medium text-sm text-foreground truncate">{data.name}</p>
+                    <p className="text-xs text-muted-foreground truncate">{data.email}</p>
+                  </div>
+                </div>
+                <StatusBadge status={data.status} />
+              </div>
+              <div className="mt-1.5 ml-9.5 text-xs text-muted-foreground truncate">
+                {data.company}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden sm:block overflow-x-auto">
         <table className="text-sm w-full">
           <thead>
             <tr className="border-b border-border bg-muted/45">

@@ -50,7 +50,7 @@ export default async function LeadDetailPage({ params }) {
         Back to All Leads
       </Link>
       <div className="bg-card border border-border rounded-lg p-5 shadow-sm">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <div className="w-12 h-12 rounded-full bg-primary/10 text-primary text-base font-bold flex items-center justify-center shrink-0">
             {initials(lead.name)}
           </div>
@@ -62,8 +62,8 @@ export default async function LeadDetailPage({ params }) {
               {lead.company}
             </p>
           </div>
-          <StatusBadge status={lead.status} />
-          <div className="flex items-center gap-2 ml-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <StatusBadge status={lead.status} />
             <Link href={`/leads/${lead._id}/edit`}>
               <Button variant="outline" size="sm">
                 <Pencil className="w-3.5 h-3.5 mr-1.5" />

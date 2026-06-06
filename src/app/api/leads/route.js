@@ -6,7 +6,7 @@ export async function POST(request) {
   try {
     await ConnectionDb();
     const body = await request.json();
-    const { name, email, PhoneNumber, company ,notes,source} = body;
+    const { name, email, PhoneNumber, company, notes, source } = body;
     if (!name || !email || !PhoneNumber || !company) {
       return NextResponse.json(
         { success: false, error: "All fields are required" },
@@ -22,7 +22,14 @@ export async function POST(request) {
       );
     }
 
-    const lead = await Leads.create({ name, email, PhoneNumber, company ,notes:notes||"",source:source||""});
+    const lead = await Leads.create({
+      name,
+      email,
+      PhoneNumber,
+      company,
+      notes: notes || "",
+      source: source || "",
+    });
 
     return NextResponse.json(
       {
@@ -62,7 +69,15 @@ export async function GET(request) {
     const status = searchParams.get("status") || "";
     const page = parseInt(searchParams.get("page")) || 1;
     const limit = parseInt(searchParams.get("limit")) || 10;
-    const sort = searchParams.get("sort") || "-createdAt";
+    const sort = searchParams.get("sort") || "newest";
+
+    const sortMap = {
+      newest: { createdAt: -1 },
+      oldest: { createdAt: 1 },
+      name_asc: { name: 1 },
+      name_desc: { name: -1 },
+    };
+
     const query = {};
     if (search) {
       query.$or = [
@@ -94,8 +109,10 @@ export async function GET(request) {
 
     const skip = (page - 1) * limit;
     const total = await Leads.countDocuments(query);
-    const leads = await Leads.find(query).sort(sort).skip(skip).limit(limit);
-
+    const leads = await Leads.find(query)
+      .sort(sortMap[sort] || { createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
     return NextResponse.json(
       {
         success: true,

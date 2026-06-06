@@ -16,6 +16,7 @@ const LeadSchema = new mongoose.Schema(
     PhoneNumber: {
       type: String,
       required: [true, "phonenumber is required"],
+      trim:true
     },
     company: {
       type: String,

@@ -13,17 +13,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -32,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import StatusBadge from "@/components/StatusBadge";
 import Link from "next/link";
+import DeleteLeadButton from "@/components/Deletebuttonlead";
 
 const FILTERS = ["All", "New", "Contacted", "Qualified", "Converted", "Lost"];
 const SORT_OPTIONS = [
@@ -59,7 +49,6 @@ export default function AllLeadsPage() {
   const [sort, setSort] = useState("newest");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(null);
 
   const fetchLeads = useCallback(async () => {
     setLoading(true);
@@ -89,21 +78,6 @@ export default function AllLeadsPage() {
   useEffect(() => {
     setPage(1);
   }, [search, status, sort]);
-
-  async function handleDelete(id, name) {
-    setDeleting(id);
-    try {
-      const res = await fetch(`/api/leads/${id}`, { method: "DELETE" });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to delete");
-      toast.success(data.message || `"${name}" deleted successfully`);
-      fetchLeads();
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setDeleting(null);
-    }
-  }
 
   return (
     <div className="p-6 space-y-6">
@@ -250,48 +224,23 @@ export default function AllLeadsPage() {
                     </td>
                     <td className="px-5 py-3">
                       <div
-                        className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <button
                           type="button"
-                          className="h-7 w-7 inline-flex items-center justify-center rounded-md hover:bg-accent transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md border border-border hover:bg-accent transition-colors"
                           onClick={() => router.push(`/leads/${lead._id}/edit`)}
                         >
-                          <Pencil className="size-4" />
+                          <Pencil className="size-3.5" />
+                          Edit
                         </button>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <button
-                              type="button"
-                              className="h-7 w-7 inline-flex items-center justify-center rounded-md hover:bg-accent hover:text-destructive transition-colors"
-                            >
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Delete lead?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This will permanently delete{" "}
-                                <strong>{lead.name}</strong>. This action cannot
-                                be undone.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel>Cancel</AlertDialogCancel>
-                              <AlertDialogAction
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                onClick={() =>
-                                  handleDelete(lead._id, lead.name)
-                                }
-                                disabled={deleting === lead._id}
-                              >
-                                {deleting === lead._id ? "Deleting…" : "Delete"}
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
+
+                        <DeleteLeadButton
+                          id={lead._id}
+                          name={lead.name}
+                          onSuccess={fetchLeads}
+                        />
                       </div>
                     </td>
                   </tr>

@@ -1,6 +1,6 @@
 import "./globals.css";
 import Providers from "@/components/ui/providers";
-import Appsidebar from "@/components/ui/Appsidebar";
+import Appsidebar from "@/components/Appsidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { Suspense } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
